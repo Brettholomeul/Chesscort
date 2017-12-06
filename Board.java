@@ -5,6 +5,10 @@ public class Board implements Iterable<TileNode>{
 	//Stores a list of all of the vertices in the board
 	private List<TileNode> vlist;
 	
+	//Stores lists of the pieces for each side
+	private ArrayList<Piece> blackPieces;
+	private ArrayList<Piece> whitePieces;
+	
 	/**
 	 * Initializes an empty list of TileNode objects
 	 */
@@ -12,10 +16,8 @@ public class Board implements Iterable<TileNode>{
 		vlist = new ArrayList<TileNode>();
 	}
 	
-	
-	
 	/**
-	 * Adds vs as a neighbor of v1 and adds v1 as a neighbor of v2.
+	 * Adds v2 as a neighbor of v1 and adds v1 as a neighbor of v2.
 	 * 
 	 * @param v1name The name of the first vertex of this edge
 	 * @param v2name The name of the second vertex of this edge
@@ -57,7 +59,7 @@ public class Board implements Iterable<TileNode>{
 		return null;
 	}
 
-	public void addTileNode(String name) {
+	public void addTileNode(String name, int x, int y) {
 		//Create an iterator for the list of all vertices in the board
 		Iterator<TileNode> itr = iterator();
 				
@@ -70,9 +72,73 @@ public class Board implements Iterable<TileNode>{
 		}
 				
 		//If no duplicates, create new TileNode from given name
-		TileNode node = new TileNode(name);
+		TileNode node = new TileNode(name, x, y);
 			
 		//Add new vertex to list of vertices in Board
 		vlist.add(node);
+	}
+	
+	public TileNode getNodeFromCoords(int x, int y){
+		for (TileNode n : vlist){
+			if ((n.getX() == x) && (n.getY() == y)){
+				return n;
+			}
+		}
+		return null;
+	}
+	
+	public Piece getWhitePieceFromCoords(int x, int y){
+		for (Piece p : whitePieces){
+			if ((p.getX() == x) && (p.getY() == y)){
+				return p;
+			}
+		}
+		return null;
+	}
+	
+	public Piece getBlackPieceFromCoords(int x, int y){
+		for (Piece p : blackPieces){
+			if ((p.getX() == x) && (p.getY() == y)){
+				return p;
+			}
+		}
+		return null;
+	}
+	
+	public void addPiece(String team, String pieceName, int x, int y){
+		if (whitePieces == null)
+			whitePieces = new ArrayList<Piece>();
+		if (blackPieces == null)
+			blackPieces = new ArrayList<Piece>();
+		
+		if (team.equals("white")){
+			if (pieceName.equals("rook")){
+				Rook rook = new Rook(x, y, this);
+				
+				whitePieces.add(rook);
+			}
+			else if (pieceName.equals("pawn")){
+				
+			}
+			else if (pieceName.equals("king")){
+				
+			}
+			else if (pieceName.equals("queen")){
+				
+			}
+			else if (pieceName.equals("bishop")){
+				
+			}
+			else if (pieceName.equals("knight")){
+				
+			}
+		}
+		else if (team.equals("black")){
+			if (pieceName.equals("rook")){
+				Rook rook = new Rook(x, y, this);
+				
+				blackPieces.add(rook);
+			}
+		}
 	}
 }

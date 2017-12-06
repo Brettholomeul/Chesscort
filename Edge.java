@@ -19,7 +19,7 @@ public class Edge implements Comparable<Edge> {
 	 * Return the results of comparing this node's neighbor name to the other
 	 * node's neighbor name. Allows List of Edges to be sorted.
 	 * 
-	 * @param otherNode Edge isntance whose TileNode needs to be compared
+	 * @param otherNode Edge instance whose TileNode needs to be compared
 	 * @return negative or positive value or zero
 	 */
 	public int compareTo(Edge otherNode){

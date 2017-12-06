@@ -1,19 +1,24 @@
 import java.util.*;
 
-
 public class TileNode implements Comparable<TileNode> {
 	private String nodeName;
 	private List<Edge> neighbors;
 	private boolean occupied;
+	private String piece;
+	
+	private int xCoord;
+	private int yCoord;
 	
 	
 	/**
 	 * Constructs a new tile node and an empty list of its neighbors
 	 * @param name - a unique name for a tile
 	 */
-	public TileNode(String name){
+	public TileNode(String name, int x, int y){
 		nodeName = name;
 		neighbors = new ArrayList<Edge>();
+		xCoord = x;
+		yCoord = y;
 	}
 	
 	/**
@@ -35,6 +40,15 @@ public class TileNode implements Comparable<TileNode> {
 	}
 	
 	/**
+	 * Gives the piece in this tile
+	 * 
+	 * @return the piece
+	 */
+	public String getPiece(){
+		return piece;
+	}
+	
+	/**
 	 * Sets the occupation state of this tile
 	 * 
 	 * @param occupy
@@ -53,13 +67,39 @@ public class TileNode implements Comparable<TileNode> {
 	}
 	
 	/**
+	 * Sets the piece for this tile
+	 * 
+	 * @param setPiece
+	 */
+	public void setPiece(String setPiece){
+		this.piece = setPiece;
+	}
+	
+	/**
 	 * Return the results of comparing this node's name to the other nodes's name
+	 * DON'T use to reference a null node
 	 * 
 	 * @param otherNode TileNode instance whose name is being compared
 	 * @return negative or positive value or zero
 	 */
 	public int compareTo(TileNode otherNode){
 		return nodeName.compareToIgnoreCase(otherNode.getNodeName());
+	}
+	
+	public void setX(int x){
+		this.xCoord = x;
+	}
+	
+	public int getX(){
+		return xCoord;
+	}
+	
+	public void setY(int y){
+		this.yCoord = y;
+	}
+	
+	public int getY(){
+		return yCoord;
 	}
 	
 	/**

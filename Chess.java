@@ -2,23 +2,7 @@ import java.io.*;
 import java.util.*;
 
 public class Chess {
-
-	public static void main(String[] args) 
-			throws FileNotFoundException, InvalidAreaFileException {
-		//If incorrect number of arguments, exit
-		if (args.length != 1){
-			System.out.println("Usage: java main area.txt");
-			System.exit(1);
-		}
-		
-		//Board file is the text document in the 0th index command line argument
-		String areaFilename = args[0];
-		
-		//Creates the board based on the file
-		Board board = Chess.createBoardFromAreaFile(areaFilename);
-		
-		System.out.println(board.getNodeFromName("a8").getNeighbors().toString());
-	}
+	private Board thisBoard;
 
 	/**
 	 * Builds the Board from the area data file.
@@ -39,12 +23,16 @@ public class Chess {
 			
 			//Adding nodes
 			while(!(node = scan.next()).equals("EDGES")){
-				b.addTileNode(node.toLowerCase());
-				
+				b.addTileNode(node.toLowerCase(), scan.nextInt(), scan.nextInt());
 			}
 			//Adding edges (i.e. connecting the nodes)
+			while(!(node = scan.next()).equals("PIECES")){
+				b.addEdge(node.toLowerCase(), scan.next().toLowerCase());
+			}
+			//Adding pieces
 			while(scan.hasNext()){
-				b.addEdge(scan.next().toLowerCase(), scan.next().toLowerCase());
+				b.addPiece(scan.next().toLowerCase(), scan.next().toLowerCase(),
+						scan.nextInt(), scan.nextInt());
 			}
 		} catch (FileNotFoundException e){
 			System.out.println("AREA FILE: " + areaFilename + " was not found.");
@@ -52,5 +40,16 @@ public class Chess {
 		}
 		
 		return b;
+	}
+	
+	public Board getBoard(String areaFilename) throws InvalidAreaFileException{
+		if (thisBoard == null){
+			thisBoard = Chess.createBoardFromAreaFile(areaFilename);
+		}
+		return thisBoard;
+	}
+	
+	public Board getBoard(){
+		return thisBoard;
 	}
 }
