@@ -181,3 +181,15 @@ black rook 1 8
 black rook 8 8
 white rook 1 1
 white rook 8 1
+black bishop 3 8
+black bishop 6 8
+white bishop 3 1
+white bishop 6 1
+black queen 4 8
+white queen 4 1
+black king 5 8
+white king 5 1
+black knight 2 8
+black knight 7 8
+white knight 2 1
+white knight 7 1

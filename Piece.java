@@ -18,5 +18,15 @@ public abstract class Piece {
 		return coordY;
 	}
 	
+	public void setX(int x){
+		coordX = x;
+	}
+	
+	public void setY(int y){
+		coordY = y;
+	}
+	
 	public abstract void printMoves();
+	
+	public abstract ArrayList<TileNode> moveSet();
 }

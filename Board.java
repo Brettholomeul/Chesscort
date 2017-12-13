@@ -9,11 +9,17 @@ public class Board implements Iterable<TileNode>{
 	private ArrayList<Piece> blackPieces;
 	private ArrayList<Piece> whitePieces;
 	
+	private Stack<Piece> removedBlack;
+	private Stack<Piece> removedWhite;
+	
 	/**
 	 * Initializes an empty list of TileNode objects
 	 */
 	public Board(){
 		vlist = new ArrayList<TileNode>();
+		
+		removedBlack = new Stack<Piece>();
+		removedWhite = new Stack<Piece>();
 	}
 	
 	/**
@@ -59,6 +65,10 @@ public class Board implements Iterable<TileNode>{
 		return null;
 	}
 
+	
+	/*
+	 * Adds a tile node to board list
+	 */
 	public void addTileNode(String name, int x, int y) {
 		//Create an iterator for the list of all vertices in the board
 		Iterator<TileNode> itr = iterator();
@@ -78,6 +88,10 @@ public class Board implements Iterable<TileNode>{
 		vlist.add(node);
 	}
 	
+	
+	/*
+	 * Gets a tile node given the coordinates
+	 */
 	public TileNode getNodeFromCoords(int x, int y){
 		for (TileNode n : vlist){
 			if ((n.getX() == x) && (n.getY() == y)){
@@ -87,6 +101,10 @@ public class Board implements Iterable<TileNode>{
 		return null;
 	}
 	
+	
+	/*
+	 * Gets a piece from the white team list based on coordinates
+	 */
 	public Piece getWhitePieceFromCoords(int x, int y){
 		for (Piece p : whitePieces){
 			if ((p.getX() == x) && (p.getY() == y)){
@@ -96,6 +114,10 @@ public class Board implements Iterable<TileNode>{
 		return null;
 	}
 	
+	
+	/*
+	 * Gets a piece from the black team list based on coordinates
+	 */
 	public Piece getBlackPieceFromCoords(int x, int y){
 		for (Piece p : blackPieces){
 			if ((p.getX() == x) && (p.getY() == y)){
@@ -105,6 +127,10 @@ public class Board implements Iterable<TileNode>{
 		return null;
 	}
 	
+	/*
+	 * Adds the pieces to the board and to their respective team lists
+	 * and sets their tiles to occupied
+	 */
 	public void addPiece(String team, String pieceName, int x, int y){
 		if (whitePieces == null)
 			whitePieces = new ArrayList<Piece>();
@@ -116,21 +142,39 @@ public class Board implements Iterable<TileNode>{
 				Rook rook = new Rook(x, y, this);
 				
 				whitePieces.add(rook);
+				
+				getNodeFromCoords(x, y).setOccupied(true, true);
 			}
 			else if (pieceName.equals("pawn")){
 				
 			}
 			else if (pieceName.equals("king")){
+				King king = new King(x, y, this);
 				
+				whitePieces.add(king);
+				
+				getNodeFromCoords(x, y).setOccupied(true, true);
 			}
 			else if (pieceName.equals("queen")){
+				Queen queen = new Queen(x, y, this);
 				
+				whitePieces.add(queen);
+				
+				getNodeFromCoords(x, y).setOccupied(true, true);
 			}
 			else if (pieceName.equals("bishop")){
+				Bishop bishop = new Bishop(x, y, this);
 				
+				whitePieces.add(bishop);
+				
+				getNodeFromCoords(x, y).setOccupied(true, true);
 			}
 			else if (pieceName.equals("knight")){
+				Knight knight = new Knight(x, y, this);
 				
+				whitePieces.add(knight);
+				
+				getNodeFromCoords(x, y).setOccupied(true, true);
 			}
 		}
 		else if (team.equals("black")){
@@ -138,7 +182,103 @@ public class Board implements Iterable<TileNode>{
 				Rook rook = new Rook(x, y, this);
 				
 				blackPieces.add(rook);
+				
+				getNodeFromCoords(x, y).setOccupied(true, false);
+			}
+			else if (pieceName.equals("pawn")){
+				
+			}
+			else if (pieceName.equals("king")){
+				King king = new King(x, y, this);
+				
+				blackPieces.add(king);
+				
+				getNodeFromCoords(x, y).setOccupied(true, false);
+			}
+			else if (pieceName.equals("queen")){
+				Queen queen = new Queen(x, y, this);
+				
+				blackPieces.add(queen);
+				
+				getNodeFromCoords(x, y).setOccupied(true, false);
+			}
+			else if (pieceName.equals("bishop")){
+				Bishop bishop = new Bishop(x, y, this);
+				
+				blackPieces.add(bishop);
+				
+				getNodeFromCoords(x, y).setOccupied(true, false);
+			}
+			else if (pieceName.equals("knight")){
+				Knight knight = new Knight(x, y, this);
+				
+				blackPieces.add(knight);
+				
+				getNodeFromCoords(x, y).setOccupied(true, false);
 			}
 		}
+	}
+	
+	
+	/*
+	 * Moves a piece from its starting coordinates to its ending coordinates
+	 */
+	public void movePieceAtCoords(int xStart, int yStart, int xEnd, int yEnd, boolean team){
+
+//		if (removedBlack == null)
+//			removedBlack = new Stack<Piece>();
+//		if (removedWhite == null)
+//			removedWhite = new Stack<Piece>();
+		
+		if (team == true){
+			Piece p = getWhitePieceFromCoords(xStart, yStart);
+			
+			ArrayList<TileNode> moveSet = p.moveSet();
+			
+			if (moveSet.contains(getNodeFromCoords(xEnd, yEnd))){
+				p.setX(xEnd);
+				p.setY(yEnd);
+				
+				if (getNodeFromCoords(xEnd, yEnd).getTeamOnTile() == !team){
+					Piece removed = getBlackPieceFromCoords(xEnd, yEnd);
+					removedBlack.push(removed);
+					
+					blackPieces.remove(removed);
+				}
+			}
+		}
+		else if (team == false){
+			Piece p = getBlackPieceFromCoords(xStart, yStart);
+			
+			ArrayList<TileNode> moveSet = p.moveSet();
+			if (moveSet.contains(getNodeFromCoords(xEnd, yEnd))){
+				p.setX(xEnd);
+				p.setY(yEnd);
+				
+				if (getNodeFromCoords(xEnd, yEnd).getTeamOnTile() == !team){
+					Piece removed = getWhitePieceFromCoords(xEnd, yEnd);
+					removedWhite.push(removed);
+					
+					whitePieces.remove(removed);
+				}
+			}
+		}
+	}
+	
+	
+	public ArrayList<Piece> getBlackPieces(){
+		return blackPieces;
+	}
+	
+	public ArrayList<Piece> getWhitePieces(){
+		return whitePieces;
+	}
+	
+	public Stack<Piece> getRemovedBlack(){
+		return removedBlack;
+	}
+	
+	public Stack<Piece> getRemovedWhite(){
+		return removedWhite;
 	}
 }

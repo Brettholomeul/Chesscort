@@ -4,7 +4,7 @@ public class TileNode implements Comparable<TileNode> {
 	private String nodeName;
 	private List<Edge> neighbors;
 	private boolean occupied;
-	private String piece;
+	private boolean teamOnTile;
 	
 	private int xCoord;
 	private int yCoord;
@@ -39,22 +39,15 @@ public class TileNode implements Comparable<TileNode> {
 		return neighbors;
 	}
 	
-	/**
-	 * Gives the piece in this tile
-	 * 
-	 * @return the piece
-	 */
-	public String getPiece(){
-		return piece;
-	}
 	
 	/**
 	 * Sets the occupation state of this tile
 	 * 
 	 * @param occupy
 	 */
-	public void setOccupied(boolean occupy){
+	public void setOccupied(boolean occupy, boolean team){
 		occupied = occupy;
+		teamOnTile = team;
 	}
 	
 	/**
@@ -62,17 +55,16 @@ public class TileNode implements Comparable<TileNode> {
 	 * 
 	 * @return boolean value
 	 */
-	public boolean getOccupied(){
+	public boolean isOccupied(){
 		return occupied;
 	}
 	
-	/**
-	 * Sets the piece for this tile
-	 * 
-	 * @param setPiece
+	
+	/*
+	 * Returns what team is occupying the tile
 	 */
-	public void setPiece(String setPiece){
-		this.piece = setPiece;
+	public boolean getTeamOnTile(){
+		return teamOnTile;
 	}
 	
 	/**
