@@ -12,52 +12,64 @@ public class Bishop extends Piece {
 		int x = getX();
 		int y = getY();
 		
-		boolean thisTeam = ourBoard.getNodeFromCoords(x, y).getTeamOnTile();
+		String thisTeam = ourBoard.getNodeFromCoords(x, y).getTeamOnTile();
 		
-		int arbitraryCounter1 = 0;
-		int arbitraryCounter2 = 0;
-		int arbitraryCounter3 = 0;
-		int arbitraryCounter4 = 0;
+		//Used so that if the bishop encounters an obstacle (piece in the way or
+		//edge of board) it will not look past the obstacle for potential moves
+		int obstacleCounter1 = 0;
+		int obstacleCounter2 = 0;
+		int obstacleCounter3 = 0;
+		int obstacleCounter4 = 0;
 		
+		//The bishop has 4 directions to check and can go until the end of the
+		//board or until it hits an obstacle, much like the rook
 		for (int i = 1; i <= 8; i++){
-			if (arbitraryCounter1 == 0){
-				if (ourBoard.getNodeFromCoords(x + i, y + i) == null){
-					arbitraryCounter1++;
-				}
+			if (obstacleCounter1 == 0){
+				TileNode upRight = ourBoard.getNodeFromCoords(x + i, y + i);
+				
+				if (upRight == null)
+					obstacleCounter1++;
+				
 				else{
-					if (ourBoard.getNodeFromCoords(x + i, y + i).getTeamOnTile() == !thisTeam
-							|| !ourBoard.getNodeFromCoords(x + i, y + i).isOccupied())
-						moves.add(ourBoard.getNodeFromCoords(x + i, y + i));
+					if (!upRight.getTeamOnTile().equals(thisTeam)
+							|| !upRight.isOccupied())
+						moves.add(upRight);
 				}
 			}
-			if (arbitraryCounter2 == 0){
-				if (ourBoard.getNodeFromCoords(x - i, y - i) == null){
-					arbitraryCounter2++;
-				}
+			if (obstacleCounter2 == 0){
+				TileNode downLeft = ourBoard.getNodeFromCoords(x - i, y - i);
+				
+				if (downLeft == null)
+					obstacleCounter2++;
+				
 				else{
-					if (ourBoard.getNodeFromCoords(x - i, y - i).getTeamOnTile() == !thisTeam
-							|| !ourBoard.getNodeFromCoords(x - i, y - i).isOccupied())
-						moves.add(ourBoard.getNodeFromCoords(x - i, y - i));
+					if (!downLeft.getTeamOnTile().equals(thisTeam)
+							|| !downLeft.isOccupied())
+						moves.add(downLeft);
 				}
 			}
-			if(arbitraryCounter3 == 0){
-				if (ourBoard.getNodeFromCoords(x - i, y + i) == null){
-					arbitraryCounter3++;
-				}
+			if(obstacleCounter3 == 0){
+				TileNode upLeft = ourBoard.getNodeFromCoords(x - i, y + i);
+				
+				if (upLeft == null)
+					obstacleCounter3++;
+				
 				else{
-					if (ourBoard.getNodeFromCoords(x - i, y + i).getTeamOnTile() == !thisTeam
-							|| !ourBoard.getNodeFromCoords(x - i, y + i).isOccupied())
-						moves.add(ourBoard.getNodeFromCoords(x - i, y + i));
+					if (!upLeft.getTeamOnTile().equals(thisTeam)
+							|| !upLeft.isOccupied())
+						moves.add(upLeft);
 				}
 			}
-			if (arbitraryCounter4 == 0){
-				if (ourBoard.getNodeFromCoords(x + i, y - i) == null){
-					arbitraryCounter4++;
-				}
+			if (obstacleCounter4 == 0){
+				TileNode downRight = ourBoard.getNodeFromCoords(x + i, y - i);
+				
+				if (downRight == null)
+					obstacleCounter4++;
+				
 				else{
-					if (ourBoard.getNodeFromCoords(x + i, y - i).getTeamOnTile() == !thisTeam
-							|| !ourBoard.getNodeFromCoords(x + i, y - i).isOccupied())
-						moves.add(ourBoard.getNodeFromCoords(x + i, y - i));
+					if (!downRight.getTeamOnTile().equals(thisTeam)
+							|| !downRight.isOccupied())
+						moves.add(downRight);
 				}
 			}
 		}

@@ -34,6 +34,8 @@ public class Chess {
 				b.addPiece(scan.next().toLowerCase(), scan.next().toLowerCase(),
 						scan.nextInt(), scan.nextInt());
 			}
+			
+			scan.close();
 		} catch (FileNotFoundException e){
 			System.out.println("AREA FILE: " + areaFilename + " was not found.");
 			System.exit(1);

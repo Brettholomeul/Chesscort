@@ -9,8 +9,8 @@ public class Board implements Iterable<TileNode>{
 	private ArrayList<Piece> blackPieces;
 	private ArrayList<Piece> whitePieces;
 	
-	private Stack<Piece> removedBlack;
-	private Stack<Piece> removedWhite;
+	private ArrayList<Piece> removedBlack;
+	private ArrayList<Piece> removedWhite;
 	
 	/**
 	 * Initializes an empty list of TileNode objects
@@ -18,8 +18,8 @@ public class Board implements Iterable<TileNode>{
 	public Board(){
 		vlist = new ArrayList<TileNode>();
 		
-		removedBlack = new Stack<Piece>();
-		removedWhite = new Stack<Piece>();
+		removedBlack = new ArrayList<Piece>();
+		removedWhite = new ArrayList<Piece>();
 	}
 	
 	/**
@@ -143,38 +143,42 @@ public class Board implements Iterable<TileNode>{
 				
 				whitePieces.add(rook);
 				
-				getNodeFromCoords(x, y).setOccupied(true, true);
+				getNodeFromCoords(x, y).setOccupied(true, "white");
 			}
 			else if (pieceName.equals("pawn")){
+				Pawn pawn = new Pawn(x, y, this);
 				
+				whitePieces.add(pawn);
+				
+				getNodeFromCoords(x, y).setOccupied(true, "white");
 			}
 			else if (pieceName.equals("king")){
 				King king = new King(x, y, this);
 				
 				whitePieces.add(king);
 				
-				getNodeFromCoords(x, y).setOccupied(true, true);
+				getNodeFromCoords(x, y).setOccupied(true, "white");
 			}
 			else if (pieceName.equals("queen")){
 				Queen queen = new Queen(x, y, this);
 				
 				whitePieces.add(queen);
 				
-				getNodeFromCoords(x, y).setOccupied(true, true);
+				getNodeFromCoords(x, y).setOccupied(true, "white");
 			}
 			else if (pieceName.equals("bishop")){
 				Bishop bishop = new Bishop(x, y, this);
 				
 				whitePieces.add(bishop);
 				
-				getNodeFromCoords(x, y).setOccupied(true, true);
+				getNodeFromCoords(x, y).setOccupied(true, "white");
 			}
 			else if (pieceName.equals("knight")){
 				Knight knight = new Knight(x, y, this);
 				
 				whitePieces.add(knight);
 				
-				getNodeFromCoords(x, y).setOccupied(true, true);
+				getNodeFromCoords(x, y).setOccupied(true, "white");
 			}
 		}
 		else if (team.equals("black")){
@@ -183,38 +187,42 @@ public class Board implements Iterable<TileNode>{
 				
 				blackPieces.add(rook);
 				
-				getNodeFromCoords(x, y).setOccupied(true, false);
+				getNodeFromCoords(x, y).setOccupied(true, "black");
 			}
 			else if (pieceName.equals("pawn")){
+				Pawn pawn = new Pawn(x, y, this);
 				
+				blackPieces.add(pawn);
+				
+				getNodeFromCoords(x, y).setOccupied(true, "black");
 			}
 			else if (pieceName.equals("king")){
 				King king = new King(x, y, this);
 				
 				blackPieces.add(king);
 				
-				getNodeFromCoords(x, y).setOccupied(true, false);
+				getNodeFromCoords(x, y).setOccupied(true, "black");
 			}
 			else if (pieceName.equals("queen")){
 				Queen queen = new Queen(x, y, this);
 				
 				blackPieces.add(queen);
 				
-				getNodeFromCoords(x, y).setOccupied(true, false);
+				getNodeFromCoords(x, y).setOccupied(true, "black");
 			}
 			else if (pieceName.equals("bishop")){
 				Bishop bishop = new Bishop(x, y, this);
 				
 				blackPieces.add(bishop);
 				
-				getNodeFromCoords(x, y).setOccupied(true, false);
+				getNodeFromCoords(x, y).setOccupied(true, "black");
 			}
 			else if (pieceName.equals("knight")){
 				Knight knight = new Knight(x, y, this);
 				
 				blackPieces.add(knight);
 				
-				getNodeFromCoords(x, y).setOccupied(true, false);
+				getNodeFromCoords(x, y).setOccupied(true, "black");
 			}
 		}
 	}
@@ -223,45 +231,98 @@ public class Board implements Iterable<TileNode>{
 	/*
 	 * Moves a piece from its starting coordinates to its ending coordinates
 	 */
-	public void movePieceAtCoords(int xStart, int yStart, int xEnd, int yEnd, boolean team){
+	public void movePieceAtCoords(int xStart, int yStart, int xEnd, int yEnd, String team)
+			throws InvalidMoveException{
 
-//		if (removedBlack == null)
-//			removedBlack = new Stack<Piece>();
-//		if (removedWhite == null)
-//			removedWhite = new Stack<Piece>();
+		TileNode startSpot = getNodeFromCoords(xStart, yStart);
+		TileNode endSpot = getNodeFromCoords(xEnd, yEnd);
 		
-		if (team == true){
+		if (team.equals("white")){
 			Piece p = getWhitePieceFromCoords(xStart, yStart);
 			
+			//Get the moveSet of piece p
 			ArrayList<TileNode> moveSet = p.moveSet();
 			
-			if (moveSet.contains(getNodeFromCoords(xEnd, yEnd))){
+			//If the moveSet of p contains the specified end location, continue
+			//Otherwise, throw an error
+			if (moveSet.contains(endSpot)){
+				//Set the pieces new location
 				p.setX(xEnd);
 				p.setY(yEnd);
 				
-				if (getNodeFromCoords(xEnd, yEnd).getTeamOnTile() == !team){
-					Piece removed = getBlackPieceFromCoords(xEnd, yEnd);
-					removedBlack.push(removed);
-					
-					blackPieces.remove(removed);
+				//If piece p isn't a pawn, it can take an enemy piece normally
+				//by occupying the same tile
+				if (!(p instanceof Pawn)){
+					if (endSpot.getTeamOnTile().equals("black")){
+						//Add the piece to the removed list and remove it from
+						//The active list
+						Piece removed = getBlackPieceFromCoords(xEnd, yEnd);
+						removedBlack.add(removed);
+						
+						blackPieces.remove(removed);
+					}
 				}
+				//Pawns have special capture rules
+				else {
+					TileNode pawnEnemyLocation = getNodeFromCoords(xStart, yStart+1);
+					
+					if (pawnEnemyLocation.isOccupied()){
+						if (pawnEnemyLocation.getTeamOnTile().equals("black")){
+							Piece removed = getBlackPieceFromCoords(xStart, yStart+1);
+							removedBlack.add(removed);
+							
+							blackPieces.remove(removed);
+						}
+					}
+					if (((Pawn) p).getFirstMove() == true)
+						((Pawn) p).setFirstMove(false);
+				}
+				endSpot.setTeamOnTile("white");
+				
+				startSpot.setOccupied(false, "unocc");
+				startSpot.setTeamOnTile("unocc");
 			}
+			else
+				throw new InvalidMoveException();
 		}
-		else if (team == false){
+		else if (team.equals("black")){
 			Piece p = getBlackPieceFromCoords(xStart, yStart);
 			
 			ArrayList<TileNode> moveSet = p.moveSet();
-			if (moveSet.contains(getNodeFromCoords(xEnd, yEnd))){
+			if (moveSet.contains(endSpot)){
 				p.setX(xEnd);
 				p.setY(yEnd);
 				
-				if (getNodeFromCoords(xEnd, yEnd).getTeamOnTile() == !team){
-					Piece removed = getWhitePieceFromCoords(xEnd, yEnd);
-					removedWhite.push(removed);
-					
-					whitePieces.remove(removed);
+				if (!(p instanceof Pawn)){
+					if (endSpot.getTeamOnTile().equals("white")){
+						Piece removed = getWhitePieceFromCoords(xEnd, yEnd);
+						removedWhite.add(removed);
+						
+						whitePieces.remove(removed);
+					}
 				}
+				else {
+					TileNode pawnEnemyLocation = getNodeFromCoords(xStart, yStart-1);
+					
+					if (pawnEnemyLocation.isOccupied()){
+						if (pawnEnemyLocation.getTeamOnTile().equals("white")){
+							Piece removed = getWhitePieceFromCoords(xStart, yStart-1);
+							removedBlack.add(removed);
+							
+							blackPieces.remove(removed);
+						}
+					}
+					if (((Pawn) p).getFirstMove() == true)
+						((Pawn) p).setFirstMove(false);
+				}
+				
+				endSpot.setTeamOnTile("black");
+				
+				startSpot.setOccupied(false, "unocc");
+				startSpot.setTeamOnTile("unocc");
 			}
+			else
+				throw new InvalidMoveException();
 		}
 	}
 	
@@ -274,11 +335,11 @@ public class Board implements Iterable<TileNode>{
 		return whitePieces;
 	}
 	
-	public Stack<Piece> getRemovedBlack(){
+	public ArrayList<Piece> getRemovedBlack(){
 		return removedBlack;
 	}
 	
-	public Stack<Piece> getRemovedWhite(){
+	public ArrayList<Piece> getRemovedWhite(){
 		return removedWhite;
 	}
 }

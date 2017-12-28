@@ -26,7 +26,13 @@ public abstract class Piece {
 		coordY = y;
 	}
 	
+	/*
+	 * Prints out the moves of the piece (mostly used for testing)
+	 */
 	public abstract void printMoves();
 	
+	/*
+	 * Returns an ArrayList of TileNodes that the piece can move to
+	 */
 	public abstract ArrayList<TileNode> moveSet();
 }

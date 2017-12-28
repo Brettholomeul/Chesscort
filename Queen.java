@@ -12,96 +12,132 @@ public class Queen extends Piece{
 		int x = getX();
 		int y = getY();
 		
-		boolean thisTeam = ourBoard.getNodeFromCoords(x, y).getTeamOnTile();
+		String thisTeam = ourBoard.getNodeFromCoords(x, y).getTeamOnTile();
 		
-		int arbitraryCounter1 = 0;
-		int arbitraryCounter2 = 0;
-		int arbitraryCounter3 = 0;
-		int arbitraryCounter4 = 0;
-		int arbitraryCounter5 = 0;
-		int arbitraryCounter6 = 0;
-		int arbitraryCounter7 = 0;
-		int arbitraryCounter8 = 0;
+		//Used so that if the queen encounters an obstacle (piece in the way or
+		//edge of board) it will not look past the obstacle for potential moves
+		int obstacleCounter1 = 0;
+		int obstacleCounter2 = 0;
+		int obstacleCounter3 = 0;
+		int obstacleCounter4 = 0;
+		int obstacleCounter5 = 0;
+		int obstacleCounter6 = 0;
+		int obstacleCounter7 = 0;
+		int obstacleCounter8 = 0;
 		
+		//Like the king, the queen has 8 directions to check. However, the queen
+		//checks until the edge of the board or until it hits an obstacle, like
+		//the bishop or rook
 		for (int i = 1; i <= 8; i++){
-			if (arbitraryCounter1 == 0){
-				if (ourBoard.getNodeFromCoords(x + i, y) == null){
-					arbitraryCounter1++;
-				}
+			//Checking to the right
+			if (obstacleCounter1 == 0){
+				TileNode right = ourBoard.getNodeFromCoords(x + i, y);
+				
+				if (right == null)
+					obstacleCounter1++;
+				
 				else{
-					if (ourBoard.getNodeFromCoords(x + i, y).getTeamOnTile() == !thisTeam
-							|| !ourBoard.getNodeFromCoords(x + i, y).isOccupied())
-						moves.add(ourBoard.getNodeFromCoords(x + i, y));
+					if (!right.getTeamOnTile().equals(thisTeam)
+							|| !right.isOccupied())
+						moves.add(right);
 				}
 			}
-			if (arbitraryCounter2 == 0){
-				if (ourBoard.getNodeFromCoords(x - i, y) == null){
-					arbitraryCounter2++;
-				}
+			
+			//Checking to the left
+			if (obstacleCounter2 == 0){
+				TileNode left = ourBoard.getNodeFromCoords(x - i, y);
+				
+				if (left == null)
+					obstacleCounter2++;
+				
 				else{
-					if (ourBoard.getNodeFromCoords(x - i, y).getTeamOnTile() == !thisTeam
-							|| !ourBoard.getNodeFromCoords(x - i, y).isOccupied())
-						moves.add(ourBoard.getNodeFromCoords(x - i, y));
+					if (!left.getTeamOnTile().equals(thisTeam)
+							|| !left.isOccupied())
+						moves.add(left);
 				}
 			}
-			if(arbitraryCounter3 == 0){
-				if (ourBoard.getNodeFromCoords(x, y + i) == null){
-					arbitraryCounter3++;
-				}
+			
+			//Checking "up" or forward
+			if(obstacleCounter3 == 0){
+				TileNode up = ourBoard.getNodeFromCoords(x, y + i);
+				
+				if (up == null)
+					obstacleCounter3++;
+				
 				else{
-					if (ourBoard.getNodeFromCoords(x, y + i).getTeamOnTile() == !thisTeam
-							|| !ourBoard.getNodeFromCoords(x, y + i).isOccupied())
-						moves.add(ourBoard.getNodeFromCoords(x, y + i));
+					if (!up.getTeamOnTile().equals(thisTeam)
+							|| !up.isOccupied())
+						moves.add(up);
 				}
 			}
-			if (arbitraryCounter4 == 0){
-				if (ourBoard.getNodeFromCoords(x, y - i) == null){
-					arbitraryCounter4++;
-				}
+			
+			//Checking "down" or backward
+			if (obstacleCounter4 == 0){
+				TileNode down = ourBoard.getNodeFromCoords(x, y - i);
+				
+				if (down == null)
+					obstacleCounter4++;
+				
 				else{
-					if (ourBoard.getNodeFromCoords(x, y - i).getTeamOnTile() == !thisTeam
-							|| !ourBoard.getNodeFromCoords(x, y - i).isOccupied())
-						moves.add(ourBoard.getNodeFromCoords(x, y - i));
+					if (!down.getTeamOnTile().equals(thisTeam)
+							|| !down.isOccupied())
+						moves.add(down);
 				}
 			}
-			if (arbitraryCounter5 == 0){
-				if (ourBoard.getNodeFromCoords(x + i, y + i) == null){
-					arbitraryCounter5++;
-				}
+			
+			//Checking diagonally forward and to the right
+			if (obstacleCounter5 == 0){
+				TileNode upRight = ourBoard.getNodeFromCoords(x + i, y + i);
+				
+				if (upRight == null)
+					obstacleCounter5++;
+				
 				else{
-					if (ourBoard.getNodeFromCoords(x + i, y + i).getTeamOnTile() == !thisTeam
-							|| !ourBoard.getNodeFromCoords(x + i, y + i).isOccupied())
-						moves.add(ourBoard.getNodeFromCoords(x + i, y + i));
+					if (!upRight.getTeamOnTile().equals(thisTeam)
+							|| !upRight.isOccupied())
+						moves.add(upRight);
 				}
 			}
-			if (arbitraryCounter6 == 0){
-				if (ourBoard.getNodeFromCoords(x - i, y - i) == null){
-					arbitraryCounter6++;
-				}
+			
+			//Checking diagonally backward and to the left
+			if (obstacleCounter6 == 0){
+				TileNode downLeft = ourBoard.getNodeFromCoords(x - i, y - i);
+				
+				if (downLeft == null)
+					obstacleCounter6++;
+				
 				else{
-					if (ourBoard.getNodeFromCoords(x - i, y - i).getTeamOnTile() == !thisTeam
-							|| !ourBoard.getNodeFromCoords(x - i, y - i).isOccupied())
-						moves.add(ourBoard.getNodeFromCoords(x - i, y - i));
+					if (!downLeft.getTeamOnTile().equals(thisTeam)
+							|| !downLeft.isOccupied())
+						moves.add(downLeft);
 				}
 			}
-			if(arbitraryCounter7 == 0){
-				if (ourBoard.getNodeFromCoords(x - i, y + i) == null){
-					arbitraryCounter7++;
-				}
+			
+			//Checking diagonally forward and to the left
+			if(obstacleCounter7 == 0){
+				TileNode upLeft = ourBoard.getNodeFromCoords(x - i, y + i);
+				
+				if (upLeft == null)
+					obstacleCounter7++;
+				
 				else{
-					if (ourBoard.getNodeFromCoords(x - i, y + i).getTeamOnTile() == !thisTeam
-							|| !ourBoard.getNodeFromCoords(x - i, y + i).isOccupied())
-						moves.add(ourBoard.getNodeFromCoords(x - i, y + i));
+					if (!upLeft.getTeamOnTile().equals(thisTeam)
+							|| !upLeft.isOccupied())
+						moves.add(upLeft);
 				}
 			}
-			if (arbitraryCounter8 == 0){
-				if (ourBoard.getNodeFromCoords(x + i, y - i) == null){
-					arbitraryCounter8++;
-				}
+			
+			//Checking diagonally backward and to the right
+			if (obstacleCounter8 == 0){
+				TileNode downRight = ourBoard.getNodeFromCoords(x + i, y - i);
+				
+				if (downRight == null)
+					obstacleCounter8++;
+				
 				else{
-					if (ourBoard.getNodeFromCoords(x + i, y - i).getTeamOnTile() == !thisTeam
-							|| !ourBoard.getNodeFromCoords(x + i, y - i).isOccupied())
-						moves.add(ourBoard.getNodeFromCoords(x + i, y - i));
+					if (!downRight.getTeamOnTile().equals(thisTeam)
+							|| !downRight.isOccupied())
+						moves.add(downRight);
 				}
 			}
 		}
