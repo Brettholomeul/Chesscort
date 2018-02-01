@@ -1,3 +1,4 @@
+package ChessPack;
 
 public class Edge implements Comparable<Edge> {
 	private TileNode neighbor;

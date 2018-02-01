@@ -1,3 +1,4 @@
+package ChessPack;
 import java.util.*;
 
 public class Board implements Iterable<TileNode>{
@@ -86,6 +87,8 @@ public class Board implements Iterable<TileNode>{
 			
 		//Add new vertex to list of vertices in Board
 		vlist.add(node);
+		
+		node.setOccupied(false, "unocc");
 	}
 	
 	

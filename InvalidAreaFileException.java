@@ -1,3 +1,4 @@
+package ChessPack;
 
 public class InvalidAreaFileException extends Exception {
     /**

@@ -1,3 +1,4 @@
+package ChessPack;
 import java.io.FileNotFoundException;
 import java.util.*;
 

@@ -1,3 +1,4 @@
+package ChessPack;
 public class NotNeighborException extends Exception {
 
 	/**

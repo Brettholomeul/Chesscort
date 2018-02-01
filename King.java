@@ -1,3 +1,4 @@
+package ChessPack;
 import java.util.*;
 
 public class King extends Piece{

@@ -1,3 +1,4 @@
+package ChessPack;
 import java.io.*;
 import java.util.*;
 
@@ -18,7 +19,7 @@ public class Chess {
 		
 		try{
 			String node = null;
-			Scanner scan = new Scanner(new File(areaFilename));
+			Scanner scan = new Scanner(new File("src/ChessPack/" + areaFilename));
 			scan.nextLine();
 			
 			//Adding nodes

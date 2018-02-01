@@ -1,3 +1,4 @@
+package ChessPack;
 import java.util.*;
 
 public class Bishop extends Piece {
@@ -27,7 +28,7 @@ public class Bishop extends Piece {
 			if (obstacleCounter1 == 0){
 				TileNode upRight = ourBoard.getNodeFromCoords(x + i, y + i);
 				
-				if (upRight == null)
+				if (upRight == null || upRight.getTeamOnTile().equals(thisTeam))
 					obstacleCounter1++;
 				
 				else{
@@ -39,7 +40,7 @@ public class Bishop extends Piece {
 			if (obstacleCounter2 == 0){
 				TileNode downLeft = ourBoard.getNodeFromCoords(x - i, y - i);
 				
-				if (downLeft == null)
+				if (downLeft == null || downLeft.getTeamOnTile().equals(thisTeam))
 					obstacleCounter2++;
 				
 				else{
@@ -51,7 +52,7 @@ public class Bishop extends Piece {
 			if(obstacleCounter3 == 0){
 				TileNode upLeft = ourBoard.getNodeFromCoords(x - i, y + i);
 				
-				if (upLeft == null)
+				if (upLeft == null || upLeft.getTeamOnTile().equals(thisTeam))
 					obstacleCounter3++;
 				
 				else{
@@ -63,7 +64,7 @@ public class Bishop extends Piece {
 			if (obstacleCounter4 == 0){
 				TileNode downRight = ourBoard.getNodeFromCoords(x + i, y - i);
 				
-				if (downRight == null)
+				if (downRight == null || downRight.getTeamOnTile().equals(thisTeam))
 					obstacleCounter4++;
 				
 				else{

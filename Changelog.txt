@@ -1,3 +1,13 @@
+1/31/18
+========
+-Fixed bug where bishop/queen moveSet() threw NullPointerException
+	-tiles now start on team "unnoc"
+
+-Fixed bug where area file wasn't found
+
+-Had fun :)
+
+========
 12/27/17
 ========
 -Added the pawn as a piece

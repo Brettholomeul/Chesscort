@@ -1,3 +1,4 @@
+package ChessPack;
 import java.util.*;
 
 public class Queen extends Piece{
@@ -33,7 +34,7 @@ public class Queen extends Piece{
 			if (obstacleCounter1 == 0){
 				TileNode right = ourBoard.getNodeFromCoords(x + i, y);
 				
-				if (right == null)
+				if (right == null || right.getTeamOnTile().equals(thisTeam))
 					obstacleCounter1++;
 				
 				else{
@@ -47,7 +48,7 @@ public class Queen extends Piece{
 			if (obstacleCounter2 == 0){
 				TileNode left = ourBoard.getNodeFromCoords(x - i, y);
 				
-				if (left == null)
+				if (left == null || left.getTeamOnTile().equals(thisTeam))
 					obstacleCounter2++;
 				
 				else{
@@ -61,7 +62,7 @@ public class Queen extends Piece{
 			if(obstacleCounter3 == 0){
 				TileNode up = ourBoard.getNodeFromCoords(x, y + i);
 				
-				if (up == null)
+				if (up == null || up.getTeamOnTile().equals(thisTeam))
 					obstacleCounter3++;
 				
 				else{
@@ -75,7 +76,7 @@ public class Queen extends Piece{
 			if (obstacleCounter4 == 0){
 				TileNode down = ourBoard.getNodeFromCoords(x, y - i);
 				
-				if (down == null)
+				if (down == null || down.getTeamOnTile().equals(thisTeam))
 					obstacleCounter4++;
 				
 				else{
@@ -89,7 +90,7 @@ public class Queen extends Piece{
 			if (obstacleCounter5 == 0){
 				TileNode upRight = ourBoard.getNodeFromCoords(x + i, y + i);
 				
-				if (upRight == null)
+				if (upRight == null || upRight.getTeamOnTile().equals(thisTeam))
 					obstacleCounter5++;
 				
 				else{
@@ -103,7 +104,7 @@ public class Queen extends Piece{
 			if (obstacleCounter6 == 0){
 				TileNode downLeft = ourBoard.getNodeFromCoords(x - i, y - i);
 				
-				if (downLeft == null)
+				if (downLeft == null || downLeft.getTeamOnTile().equals(thisTeam))
 					obstacleCounter6++;
 				
 				else{
@@ -117,7 +118,7 @@ public class Queen extends Piece{
 			if(obstacleCounter7 == 0){
 				TileNode upLeft = ourBoard.getNodeFromCoords(x - i, y + i);
 				
-				if (upLeft == null)
+				if (upLeft == null || upLeft.getTeamOnTile().equals(thisTeam))
 					obstacleCounter7++;
 				
 				else{
@@ -131,7 +132,7 @@ public class Queen extends Piece{
 			if (obstacleCounter8 == 0){
 				TileNode downRight = ourBoard.getNodeFromCoords(x + i, y - i);
 				
-				if (downRight == null)
+				if (downRight == null || downRight.getTeamOnTile().equals(thisTeam))
 					obstacleCounter8++;
 				
 				else{
