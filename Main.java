@@ -57,12 +57,18 @@ public class Main {
 				 * Lists the viable moves
 				 */
 				if (team.equals("white")){
+					Piece whitePiece = board.getWhitePieceFromCoords(xStart, yStart);
+					System.out.println("Selected Piece: " + whitePiece.toString()
+						.split("@", 2)[0].replace("ChessPack.", "") + " ");
 					System.out.println("Viable moves:");
-					board.getWhitePieceFromCoords(xStart, yStart).printMoves();;
+					whitePiece.printMoves();
 				}
 				else{
+					Piece blackPiece = board.getBlackPieceFromCoords(xStart, yStart);
+					System.out.println("Selected Piece: " + blackPiece.toString()
+						.split("@", 2)[0].replace("ChessPack.", "") + " ");
 					System.out.println("Viable moves:");
-					board.getBlackPieceFromCoords(xStart, yStart).printMoves();;
+					blackPiece.printMoves();
 				}
 				
 				/*
@@ -99,13 +105,13 @@ public class Main {
 			 */
 			System.out.print("Current White Pieces: ");
 			for (Piece p : board.getWhitePieces())
-				System.out.print(p.toString().split("@", 2)[0] + " ");
+				System.out.print(p.toString().split("@", 2)[0].replace("ChessPack.", "") + " ");
 			
 			System.out.println();
 			
 			System.out.print("Current Black Pieces: ");
 			for (Piece p : board.getBlackPieces())
-				System.out.print(p.toString().split("@", 2)[0] + " ");
+				System.out.print(p.toString().split("@", 2)[0].replace("ChessPack.", "") + " ");
 			
 			System.out.println();
 			

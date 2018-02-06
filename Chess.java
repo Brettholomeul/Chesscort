@@ -19,7 +19,7 @@ public class Chess {
 		
 		try{
 			String node = null;
-			Scanner scan = new Scanner(new File("src/ChessPack/" + areaFilename));
+			Scanner scan = new Scanner(new File("ChessPack/" + areaFilename));
 			scan.nextLine();
 			
 			//Adding nodes

@@ -80,8 +80,12 @@ public class Bishop extends Piece {
 	
 	public void printMoves() {
 		ArrayList<TileNode> moves = moveSet();
-		for (TileNode n : moves){
-			System.out.println(n.toString());
+		if (moves.isEmpty())
+			System.out.println("No Moves!");
+		else {
+			for (TileNode n : moves){
+				System.out.println(n.toString());
+			}
 		}
 	}
 }
