@@ -58,6 +58,19 @@ public class Main {
 				 */
 				if (team.equals("white")){
 					Piece whitePiece = board.getWhitePieceFromCoords(xStart, yStart);
+					while (whitePiece.moveSet().isEmpty()) {
+						System.out.println("No viable moves, pick a different piece!");
+						
+						System.out.print("X-Coordinate: ");
+						xStart = scan.nextInt();
+						System.out.println();
+						
+						System.out.print("Y-Coordinate: ");
+						yStart = scan.nextInt();
+						System.out.println();
+						
+						whitePiece = board.getWhitePieceFromCoords(xStart, yStart);
+					}
 					System.out.println("Selected Piece: " + whitePiece.toString()
 						.split("@", 2)[0].replace("ChessPack.", "") + " ");
 					System.out.println("Viable moves:");
@@ -65,6 +78,19 @@ public class Main {
 				}
 				else{
 					Piece blackPiece = board.getBlackPieceFromCoords(xStart, yStart);
+					while (blackPiece.moveSet().isEmpty()) {
+						System.out.println("No viable moves, pick a different piece!");
+						
+						System.out.print("X-Coordinate: ");
+						xStart = scan.nextInt();
+						System.out.println();
+						
+						System.out.print("Y-Coordinate: ");
+						yStart = scan.nextInt();
+						System.out.println();
+						
+						blackPiece = board.getBlackPieceFromCoords(xStart, yStart);
+					}
 					System.out.println("Selected Piece: " + blackPiece.toString()
 						.split("@", 2)[0].replace("ChessPack.", "") + " ");
 					System.out.println("Viable moves:");
