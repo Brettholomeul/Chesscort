@@ -2,9 +2,6 @@ package ChessPack;
 import java.util.*;
 
 public class Board implements Iterable<TileNode>{
-
-	//Stores a list of all of the vertices in the board
-	private List<TileNode> vlist;
 	
 	//Stores lists of the pieces for each side
 	private ArrayList<Piece> blackPieces;
@@ -13,11 +10,14 @@ public class Board implements Iterable<TileNode>{
 	private ArrayList<Piece> removedBlack;
 	private ArrayList<Piece> removedWhite;
 	
+	private HashMap<Integer, TileNode> tileHash;
+	
 	/**
 	 * Initializes an empty list of TileNode objects
 	 */
 	public Board(){
-		vlist = new ArrayList<TileNode>();
+		
+		tileHash = new HashMap<Integer, TileNode>();
 		
 		removedBlack = new ArrayList<Piece>();
 		removedWhite = new ArrayList<Piece>();
@@ -47,30 +47,6 @@ public class Board implements Iterable<TileNode>{
 	}
 	
 	
-	/**
-	 * REturn an iterator through all nodes in the Board
-	 * 
-	 * @return iterator through all nodes in alphabetical order
-	 */
-	public Iterator<TileNode> iterator() {
-		return vlist.iterator();
-	}
-	
-	/**
-	 * @param name Name corresponding to node to be returned
-	 * @return TileNode associated with name, null if no such node exists
-	 */
-	/*
-	public TileNode getNodeFromName(String name){
-		for (TileNode n : vlist){
-			if (n.getNodeName().equalsIgnoreCase(name))
-				return n;
-		}
-		return null;
-	}
-	*/
-	
-	
 	/*
 	 * Adds a tile node to board list
 	 */
@@ -78,9 +54,13 @@ public class Board implements Iterable<TileNode>{
 			
 		//If no duplicates, create new TileNode from given name
 		TileNode node = new TileNode(x, y);
-			
-		//Add new vertex to list of vertices in Board
-		vlist.add(node);
+		
+		//Gives a unique key for each coordinate set using Cantor's
+		//Pairing Function
+		Integer cantor = ((x+y)*(x+y+1))/2+y;
+		
+		//Adds the tile to the hash map
+		tileHash.put(cantor, node);
 		
 		node.setOccupied(false, "unocc");
 	}
@@ -90,12 +70,10 @@ public class Board implements Iterable<TileNode>{
 	 * Gets a tile node given the coordinates
 	 */
 	public TileNode getNodeFromCoords(int x, int y){
-		for (TileNode n : vlist){
-			if ((n.getX() == x) && (n.getY() == y)){
-				return n;
-			}
-		}
-		return null;
+		
+		Integer cantor = ((x+y)*(x+y+1))/2+y;
+		
+		return tileHash.get(cantor);
 	}
 	
 	
@@ -338,5 +316,10 @@ public class Board implements Iterable<TileNode>{
 	
 	public ArrayList<Piece> getRemovedWhite(){
 		return removedWhite;
+	}
+
+	public Iterator<TileNode> iterator() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

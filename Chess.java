@@ -18,7 +18,7 @@ public class Chess {
 		Board b = new Board();
 		
 		try{
-			Scanner scan = new Scanner(new File("src/ChessPack/" + areaFilename));
+			Scanner scan = new Scanner(new File("ChessPack/" + areaFilename));
 			scan.nextLine();
 			
 			//Adding nodes
