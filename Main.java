@@ -20,12 +20,7 @@ public class Main {
 		
 		//Creates the board based on the file
 		Board board = chessGame.getBoard(areaFilename);
-		
-//		System.out.println(board.getNodeFromName("e7").getNeighbors().toString());
-//		System.out.println(board.getNodeFromName("e7").getX());
-//		System.out.println(board.getNodeFromName("e7").getY());
-		
-//		board.getWhitePieceFromCoords(4, 4).printMoves();
+
 		
 		System.out.println("Starting team is WHITE");
 		

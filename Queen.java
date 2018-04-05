@@ -152,7 +152,7 @@ public class Queen extends Piece{
 			System.out.println("No Moves!");
 		else {
 			for (TileNode n : moves){
-				System.out.println(n.toString());
+				System.out.println(n.getX() + " " + n.getY());
 			}
 		}
 	}

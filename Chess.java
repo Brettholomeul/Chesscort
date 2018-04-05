@@ -18,18 +18,19 @@ public class Chess {
 		Board b = new Board();
 		
 		try{
-			String node = null;
 			Scanner scan = new Scanner(new File("src/ChessPack/" + areaFilename));
 			scan.nextLine();
 			
 			//Adding nodes
-			while(!(node = scan.next()).equals("EDGES")){
-				b.addTileNode(node.toLowerCase(), scan.nextInt(), scan.nextInt());
+			while(scan.hasNextInt()){
+				b.addTileNode(scan.nextInt(), scan.nextInt());
 			}
+			scan.next();
 			//Adding edges (i.e. connecting the nodes)
-			while(!(node = scan.next()).equals("PIECES")){
-				b.addEdge(node.toLowerCase(), scan.next().toLowerCase());
+			while(scan.hasNextInt()){
+				b.addEdge(scan.nextInt(), scan.nextInt(), scan.nextInt(), scan.nextInt());
 			}
+			scan.next();
 			//Adding pieces
 			while(scan.hasNext()){
 				b.addPiece(scan.next().toLowerCase(), scan.next().toLowerCase(),

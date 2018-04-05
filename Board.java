@@ -30,20 +30,22 @@ public class Board implements Iterable<TileNode>{
 	 * @param v2name The name of the second vertex of this edge
 	 * @throws IllegalArgumentException if the names are the same
 	 */
-	public void addEdge(String v1name, String v2name) throws IllegalArgumentException{
-		//Vertices cannot be direct neighbors of themselves. If the two vertices
-		//listed are the same, throw IllegalArgumentException
-		if (v1name.equals(v2name)) throw new IllegalArgumentException();
+	public void addEdge(int x1, int x2, int x3, int x4) throws IllegalArgumentException{
 		
 		//Get the TileNode objects/vertices from the given names
-		TileNode node1 = getNodeFromName(v1name);
-		TileNode node2 = getNodeFromName(v2name);
+		TileNode node1 = getNodeFromCoords(x1, x2);
+		TileNode node2 = getNodeFromCoords(x3, x4);
 		
+		//Vertices cannot be direct neighbors of themselves. If the two vertices
+		//listed are the same, throw IllegalArgumentException
+		if (node1.equals(node2)) throw new IllegalArgumentException();
+				
 		//Add vertices as neighbors of each other. Dual setting required to
 		//make is an undirected graph.
 		node1.addEdge(node2);
 		node2.addEdge(node1);
 	}
+	
 	
 	/**
 	 * REturn an iterator through all nodes in the Board
@@ -58,6 +60,7 @@ public class Board implements Iterable<TileNode>{
 	 * @param name Name corresponding to node to be returned
 	 * @return TileNode associated with name, null if no such node exists
 	 */
+	/*
 	public TileNode getNodeFromName(String name){
 		for (TileNode n : vlist){
 			if (n.getNodeName().equalsIgnoreCase(name))
@@ -65,25 +68,16 @@ public class Board implements Iterable<TileNode>{
 		}
 		return null;
 	}
-
+	*/
+	
 	
 	/*
 	 * Adds a tile node to board list
 	 */
-	public void addTileNode(String name, int x, int y) {
-		//Create an iterator for the list of all vertices in the board
-		Iterator<TileNode> itr = iterator();
-				
-		//For every vertex in the board, check to see if the vertex we are
-		//adding is a duplicate. If so, exit method without adding vertex.
-		while(itr.hasNext()){
-			if (itr.next().getNodeName().equals(name)){
-				return;
-			}
-		}
-				
+	public void addTileNode(int x, int y) {
+			
 		//If no duplicates, create new TileNode from given name
-		TileNode node = new TileNode(name, x, y);
+		TileNode node = new TileNode(x, y);
 			
 		//Add new vertex to list of vertices in Board
 		vlist.add(node);

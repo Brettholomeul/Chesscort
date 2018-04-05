@@ -15,6 +15,12 @@ public class Edge implements Comparable<Edge> {
 	public TileNode getNeighborNode(){
 		return neighbor;
 	}
+
+	@Override
+	public int compareTo(Edge o) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
 	
 	/**
 	 * Return the results of comparing this node's neighbor name to the other
@@ -23,6 +29,7 @@ public class Edge implements Comparable<Edge> {
 	 * @param otherNode Edge instance whose TileNode needs to be compared
 	 * @return negative or positive value or zero
 	 */
+	/*
 	public int compareTo(Edge otherNode){
 		//Get name of the vertex at the end of the other neighbor
 		String otherName = otherNode.getNeighborNode().getNodeName();
@@ -30,15 +37,6 @@ public class Edge implements Comparable<Edge> {
 		//Compare
 		return neighbor.getNodeName().compareToIgnoreCase(otherName);
 	}
+	*/
 	
-	/**
-	 * Returns a String representation of this Edge.
-	 * The String that is returned shows an arrow and then the Edge
-	 * node's name.
-	 * 
-	 * @return String representation
-	 */
-	public String toString(){
-		return "-->" + neighbor.getNodeName();
-	}
 }
