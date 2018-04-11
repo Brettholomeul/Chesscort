@@ -5,22 +5,30 @@ import java.util.*;
 public class Main {
 	public static void main(String[] args) 
 			throws FileNotFoundException, InvalidAreaFileException, InvalidMoveException {
-		Chess chessGame = new Chess();
-		
 		Scanner scan = new Scanner(System.in);
+		Chess chessGame = new Chess();
+		Board board;
 		
-		//If incorrect number of arguments, exit
-		if (args.length != 1){
-			System.out.println("Usage: java main area.txt");
-			System.exit(1);
+		System.out.print("Load area file [0] or create custom board [1]: ");
+		
+		if (scan.nextInt() == 1){
+			System.out.println();
+			board = chessGame.getBoard();
 		}
 		
-		//Board file is the text document in the 0th index command line argument
-		String areaFilename = args[0];
+		else{
+			//If incorrect number of arguments, exit
+			if (args.length != 1){
+				System.out.println("Usage: java main area.txt");
+				System.exit(1);
+			}
 		
-		//Creates the board based on the file
-		Board board = chessGame.getBoard(areaFilename);
-
+			//Board file is the text document in the 0th index command line argument
+			String areaFilename = args[0];
+		
+			//Creates the board based on the file
+			board = chessGame.getBoard(areaFilename);
+		}
 		
 		System.out.println("Starting team is WHITE");
 		

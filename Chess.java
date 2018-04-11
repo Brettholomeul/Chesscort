@@ -46,6 +46,52 @@ public class Chess {
 		return b;
 	}
 	
+	public static Board createCustomBoard(){
+		Chess chess = new Chess();
+		
+		Board b = new Board();
+		
+		Scanner scan = new Scanner(System.in);
+		
+		int x;
+		int y;
+		
+		while (true) {
+			System.out.print("Input x, y coordinate for tile. \n");
+			
+			System.out.print("\nX value: ");
+			
+			x = scan.nextInt();
+			
+			System.out.print("\nY value: ");
+			
+			y = scan.nextInt();
+			
+			b.addTileNode(x, y);
+			
+			if (b.getHash().containsKey(chess.cantor(x-1,y))){
+				b.addEdge(x, y, x-1, y);
+			}
+			if (b.getHash().containsKey(chess.cantor(x,y-1))){
+				b.addEdge(x, y, x, y-1);
+			}
+			if (b.getHash().containsKey(chess.cantor(x+1,y))){
+				b.addEdge(x, y, x+1, y);
+			}
+			if (b.getHash().containsKey(chess.cantor(x,y+1))){
+				b.addEdge(x, y, x, y+1);
+			}
+			
+			System.out.println("\nAdd more? [Y/N]");
+			if (scan.next().equals("N"))
+				break;
+		}
+		
+		scan.close();
+		
+		return b;
+	}
+	
 	public Board getBoard(String areaFilename) throws InvalidAreaFileException{
 		if (thisBoard == null){
 			thisBoard = Chess.createBoardFromAreaFile(areaFilename);
@@ -53,7 +99,17 @@ public class Chess {
 		return thisBoard;
 	}
 	
+	
 	public Board getBoard(){
+		if (thisBoard == null){
+			thisBoard = Chess.createCustomBoard();
+		}
 		return thisBoard;
+	}
+	
+	private int cantor(int x, int y){
+		int z = ((x+y)*(x+y+1))/2+y;
+		
+		return z;
 	}
 }

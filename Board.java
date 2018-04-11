@@ -23,6 +23,10 @@ public class Board implements Iterable<TileNode>{
 		removedWhite = new ArrayList<Piece>();
 	}
 	
+	public HashMap<Integer, TileNode> getHash(){
+		return tileHash;
+	}
+	
 	/**
 	 * Adds v2 as a neighbor of v1 and adds v1 as a neighbor of v2.
 	 * 
