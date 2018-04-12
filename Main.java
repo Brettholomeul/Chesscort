@@ -34,8 +34,8 @@ public class Main {
 		
 		String team = "white";
 		
-		int xStart;
-		int yStart;
+		int xStart = 0;
+		int yStart = 0;
 		int xEnd;
 		int yEnd;
 		
@@ -49,11 +49,13 @@ public class Main {
 				System.out.println("Choose a piece to move (coordinates)");
 				
 				System.out.print("X-Coordinate: ");
-				xStart = scan.nextInt();
+				if (scan.hasNextInt())
+					xStart = scan.nextInt();
 				System.out.println();
 				
 				System.out.print("Y-Coordinate: ");
-				yStart = scan.nextInt();
+				if (scan.hasNextInt())
+					yStart = scan.nextInt();
 				System.out.println();
 				
 				/*

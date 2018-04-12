@@ -18,7 +18,7 @@ public class Chess {
 		Board b = new Board();
 		
 		try{
-			Scanner scan = new Scanner(new File("ChessPack/" + areaFilename));
+			Scanner scan = new Scanner(new File("src/ChessPack/" + areaFilename));
 			scan.nextLine();
 			
 			//Adding nodes
@@ -46,6 +46,7 @@ public class Chess {
 		return b;
 	}
 	
+	@SuppressWarnings("resource")
 	public static Board createCustomBoard(){
 		Chess chess = new Chess();
 		
@@ -55,6 +56,9 @@ public class Chess {
 		
 		int x;
 		int y;
+		
+		String team;
+		String pieceName;
 		
 		while (true) {
 			System.out.print("Input x, y coordinate for tile. \n");
@@ -83,11 +87,45 @@ public class Chess {
 			}
 			
 			System.out.println("\nAdd more? [Y/N]");
-			if (scan.next().equals("N"))
+			if (scan.next().equals("N")) {
+				System.out.println();
 				break;
+			}
 		}
 		
-		scan.close();
+		while(true) {
+			System.out.println("Add Piece? [Y/N]");
+			if (scan.next().equals("N"))
+				break;
+			
+			System.out.print("Input x, y coordinates for piece.\nX value: ");
+			
+			x = scan.nextInt();
+			
+			System.out.print("\nY value: ");
+			
+			y = scan.nextInt();
+			
+			if (b.getBlackPieceFromCoords(x, y) == null 
+					&& b.getWhitePieceFromCoords(x, y) == null) {
+				System.out.print("\nTeam [B/W]: ");
+				
+				team = scan.next();
+				
+				if (team.equals("b") || team.equals("B"))
+					team = "black";
+				else if (team.equals("w") || team.equals("W"))
+					team = "white";
+				
+				System.out.print("\nPiece type [Bishop/King/Knight/Pawn/Queen/Rook]: ");
+				
+				pieceName = scan.next();
+				
+				b.addPiece(team, pieceName, x, y);
+				
+				System.out.println();
+			}
+		}
 		
 		return b;
 	}

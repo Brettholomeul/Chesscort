@@ -85,9 +85,11 @@ public class Board implements Iterable<TileNode>{
 	 * Gets a piece from the white team list based on coordinates
 	 */
 	public Piece getWhitePieceFromCoords(int x, int y){
-		for (Piece p : whitePieces){
-			if ((p.getX() == x) && (p.getY() == y)){
-				return p;
+		if (whitePieces != null) {
+			for (Piece p : whitePieces){
+				if ((p.getX() == x) && (p.getY() == y)){
+					return p;
+				}
 			}
 		}
 		return null;
@@ -98,9 +100,11 @@ public class Board implements Iterable<TileNode>{
 	 * Gets a piece from the black team list based on coordinates
 	 */
 	public Piece getBlackPieceFromCoords(int x, int y){
-		for (Piece p : blackPieces){
-			if ((p.getX() == x) && (p.getY() == y)){
-				return p;
+		if (blackPieces != null) {
+			for (Piece p : blackPieces){
+				if ((p.getX() == x) && (p.getY() == y)){
+					return p;
+				}
 			}
 		}
 		return null;
